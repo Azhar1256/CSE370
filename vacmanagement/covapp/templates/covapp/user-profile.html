@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME</title>
+    <style>
+        .user-card{
+            border: 1px solid black;
+            padding: 25px;
+            width: 25%;
+        }
+        .news-card{
+            border: 1px solid black;
+            padding: 50px;
+            width: 350px;
+            margin-bottom: 10px;
+            order: 5;
+        }
+        .container{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .registration-link{
+            background-color: yellowgreen;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        .custom-btn{
+            margin-top: 10px;
+        }
+        .edit-btn{
+            background-color: yellowgreen;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        .delete-btn{
+            background-color: yellowgreen;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        .certificate{
+            background-color: yellowgreen;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'logout' %}">Logout</a>
+    <h1>NOTICE!!!</h1>
+    <div class="new-container">
+        {% for e in news %}
+            <div class="news-card">
+                {{e.news}}
+            </div>
+        {% endfor %}
+    </div>
+    
+
+    <div class="custom-btn">
+        <a href="{% url 'vacRegistration' %}" class="registration-link">Vaccine Registration</a>
+    </div>
+    
+
+    <h1>USER DETAILS</h1>
+    {% for i in data %}
+
+        <div class="user-card">
+            <h5>NAME: {{i.name}}</h5>
+            <h5>ADDRESS: {{i.address}}</h5>
+            <h5>MOBILE: {{i.mobile}}</h5>
+            <h5>NID: {{i.nid}}</h5>
+            <h5>Prefered Vaccine: {{i.p_vac}}</h5>
+            <h5>Actual Vaccine: {{i.a_vac}}</h5>
+            <h5>Appointment Date: {{i.appointment}}</h5>
+            <h5>Status: {{i.vaced}}</h5>
+
+            {% if i.vaced %}
+                <a href="{% url 'certificate' i.id%}" class="certificate">See Your Certificate</a>
+            {% endif %}
+
+            <a href="{% url 'editDetails' i.id %}" class="edit-btn">Edit Details</a>
+            <a href="{% url 'deleteDetails' i.id %}" class="delete-btn">Delete</a>
+
+        </div>
+
+    {% endfor %}
+    
+</body>
+</html>
