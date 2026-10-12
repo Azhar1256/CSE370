@@ -17,5 +17,5 @@ urlpatterns = [
     path('delete-details/<str:pk>', delete_details, name = "deleteDetails"),
     path('login/', login_page, name = 'loginPage'),
     path('signup/',  register_page, name = 'registerPage'),
-    path('logout/,', logout_user, name='logout')
+    path('logout/', logout_user, name='logout')
 ]

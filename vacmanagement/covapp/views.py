@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth import authenticate, login, logout
 
@@ -10,6 +11,7 @@ from .models import Notices
 from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
+@login_required
 def userprofile(request):
     data = VaccineRegistration.objects.all()
     news = Notices.objects.all()
@@ -21,6 +23,7 @@ def userprofile(request):
     
     return render(request, 'covapp/user-profile.html', context)
 
+@login_required
 def vacregistration(request):
     form = VaccineRegistrationForm()
     
@@ -37,8 +40,9 @@ def vacregistration(request):
     
     return render(request, 'covapp/vac-reg.html', context)
 
+@login_required
 def certificatepage(request, pk):
-    user_data = VaccineRegistration.objects.get(id=pk)
+    user_data = get_object_or_404(VaccineRegistration, id=pk)
     
     context = {
         'user_data': user_data,
@@ -46,8 +50,9 @@ def certificatepage(request, pk):
     
     return render(request, 'covapp/certificate.html', context)
 
+@login_required
 def editdetails(request, pk):
-    vaccineRegistration = VaccineRegistration.objects.get(id=pk)
+    vaccineRegistration = get_object_or_404(VaccineRegistration, id=pk)
     form = VaccineRegistrationForm(instance = vaccineRegistration)
     
     if request.method == 'POST':
@@ -64,9 +69,10 @@ def editdetails(request, pk):
 
 
 
+@login_required
 def delete_details(request, pk):
     
-    data = VaccineRegistration.objects.get(id=pk)
+    data = get_object_or_404(VaccineRegistration, id=pk)
     
     if request.method == 'POST':
         data.delete()
